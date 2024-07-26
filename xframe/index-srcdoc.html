@@ -1,0 +1,59 @@
+<html>
+<style>
+  .iframe-container {
+    height: 50px;
+    width: 400px;
+  }
+</style>
+
+<body>
+  <div>
+    <form name="cc1.1"
+          id="cc1"
+          action="destination.html"
+          method="get">
+      <div>
+        iframe 1<br />
+        <iframe frameborder="1"
+                scrolling="no"
+                id="cc-name-iframe1"
+                class="iframe-container"
+                srcdoc="<form name='cc-name-form'
+                id='cc-name-form1'>
+                Name on card: <input type='text'
+                name='name'
+                id='credit_card_name'
+                autocomplete='cc-name' /></form>"></iframe></div><br />
+      <div>
+        iframe 2<br />
+        <iframe src="cc-number.html"
+                frameborder="1"
+                scrolling="no"
+                id="cc-number-iframe1"
+                class="iframe-container"></iframe></div><br />
+      <div>
+        iframe 3<br />
+        <iframe src="cc-expiry-date.html"
+                frameborder="1"
+                scrolling="no"
+                id="cc-expiry-date-iframe1"
+                class="iframe-container"></iframe></div><br />
+      <div>
+        iframe 4<br />
+        <iframe src="cc-cvc.html"
+                frameborder="1"
+                scrolling="no"
+                id="cc-cvc-iframe1"
+                class="iframe-container"></iframe></div><br />
+      <!-- CVC: <input name="cvc" autocomplete="cc-csc" /> <br /> -->
+      <input type="reset"
+             value="Reset">
+      <input type="submit"
+             value="Submit"
+             id="credit_card_submit">
+      <br />
+    </form>
+  </div>
+</body>
+
+</html>
