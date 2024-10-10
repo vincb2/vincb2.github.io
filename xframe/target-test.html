@@ -12,11 +12,14 @@
           id="cc1"
           action="../destination.html"
           method="get"
-          target="cc-name-iframe">
-      <!-- Name on card: <input autofocus=""
-         type="text"
-         name="name"
-         id="credit_card_name" /><br /> -->
+          target="target-frame">
+      Submission target frame<br />
+      <iframe srcdoc="<body>empty</body>"
+              frameborder="1"
+              scrolling="no"
+              id="target-frame"
+              name="target-frame"
+              class="iframe-container"></iframe><br />
       iframe 1<br />
       <iframe src="cc-name.html"
               frameborder="1"
