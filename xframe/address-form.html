@@ -1,3 +1,5 @@
+<body>
+
 Address Form <br>
 
 <form name="addr1.1" id="form1" action="https://romantic-dirt-jaguar.glitch.me/post" method="post">
@@ -23,6 +25,16 @@ Address Form <br>
   </div>
   <input type="reset" value="Reset">
   <input type="submit" value="Submit" id="profile_submit">
-  <button type="button" onclick="AjaxSubmit(event)">AJAX Submit</button>
-  <button type="button" onclick="ShowPhoneNumber()">Show phone number</button>
+  <button type="button" onclick="AjaxSubmit(event)">XHR Submit</button>
 </form>
+
+<script>
+  function AjaxSubmit(event) {
+    document.forms[0].remove();
+    const submittedMsg = document.createElement('div');
+    submittedMsg.innerHTML = 'Submitted! via AJAX';
+    document.body.appendChild(submittedMsg);
+  }
+</script>
+
+</body>
