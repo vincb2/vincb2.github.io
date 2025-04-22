@@ -1,0 +1,59 @@
+<!--
+Copyright 2025 The Chromium Authors
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+
+<!--
+Address form that prevents default on form submission.
+-->
+
+<!DOCTYPE html>
+
+<html>
+
+<head></head>
+
+<body>
+  <div id="form-wrapper">
+    <form method="get" action="destination.html">
+      <label for="fullname">Name:</label><br>
+      <input type="text" autocomplete="name" name="fullname" /><br>
+
+      <label for="address-line1">Street Address:</label><br>
+      <input type="text" name="address-line1" /><br>
+
+      <label for="city">City:</label><br>
+      <input type="text" name="city" /><br>
+
+      <label for="state">State:</label><br>
+      <input type="text" name="state" /><br>
+
+      <label for="postal-code">Postal Code:</label><br>
+      <input type="text" autocomplete="postal-code" name="postal-code" /><br>
+
+      <label for="country">Country:</label><br>
+      <input type="text" autocomplete="country" name="country" /><br>
+
+      <button type="submit">Submit!</button>
+    </form>
+  </div>
+
+  <script>
+    // Add a "submit" event listener that takes over submission and prevents
+    // the browser from handling submission through the regular flow.
+    const form = document.forms[0];
+    form.addEventListener('submit', (e) => {
+      // Prevent default for other listeners so the the Autofill listener will
+      // read the event with the defaultPrevented bit set to true.
+      e.preventDefault();
+
+      // Emulate a post-submit navigation.
+      setTimeout(() => window.location = '/destination.html', 50);
+    });
+  </script>
+
+</body>
+
+</html>
+<html>
