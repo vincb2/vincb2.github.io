@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1> POST me a message I will reply to you</h1>
+    <button onclick="OnClick()">Click ME!</button>
+
+    <script>
+        async function handlePostMessage(event) {
+            // Process the received data (event.data)
+            const receivedMessage = event.data;
+            console.log('Received message:', receivedMessage);
+
+            // Construct the reply message
+            const replyMessage = {
+                status: 'received',
+                acknowledged: true,
+                originalMessage: receivedMessage,
+                timestamp: new Date().toISOString()
+            };
+
+            // Send the reply back to the sender using the 'source' and 'origin' of the event
+            if (receivedMessage.replyToMe) {
+                event.source.postMessage(replyMessage, event.origin);
+            } else {
+                event.source.postMessage(replyMessage);
+            }
+
+            console.log('Replied to sender:', replyMessage);
+            alert("Replied to sender!");
+        }
+
+        function OnClick() {
+            console.log('The button was clicked!');
+            alert("Button was clicked!");
+        }
+
+        window.addEventListener('message', handlePostMessage);
+
+
+    </script>
+
+</body>
+
+</html>
