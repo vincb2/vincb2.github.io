@@ -1,10 +1,29 @@
 <!DOCTYPE html>
+<html>
 
-<html><body>
-Signup form.
-<form name='signup_form' id='signup_form' action='destination.html'>
-  <input type='text' name='username' id='un' value='Eguser'><br/>
-  <input type='password' name='new-password' id='pw' autocomplete='new-password'><br/>
-  <button id='submit_button' value='Submit'>SubForm</button>
-</form>
-</body></html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generation Crash Test</title>
+</head>
+
+<body>
+  <h1>Signup Form</h1>
+
+  <form name="signup_form" id="signup_form" action="destination.html">
+
+    <label for="un">Username:</label><br />
+    <input type="text" name="username" id="un" value="Eguser" autocomplete="username" /><br /><br />
+
+    <label for="pw1">New Password:</label><br />
+    <input type="password" name="new-password" id="pw1" autocomplete="new-password" /><br /><br />
+    
+    <label for="pw2">Confirm New Password:</label><br />
+    <input type="password" name="confirm-password" id="pw2" autocomplete="new-password" /><br /><br />
+    
+    <button type="submit" id="submit_button">Submit</button>
+    </form>
+  <p id="status">Script not run yet.</p>
+  </body>
+  
+  </html>
