@@ -1,5 +1,204 @@
-<h1>HELLO! would you like to test autofilling forms :) </h1>
+<!DOCTYPE html>
+<html>
 
-<ul>
-    <li><a href="full-address-form.html">Full Address Form</a></li>
-</ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autofill Test Pages</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        a {
+            font-weight: bold;
+            text-decoration: none;
+            color: #0275d8;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .description {
+            display: block;
+            color: #666;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>HELLO! would you like to test autofilling forms :)</h1>
+
+    <h2>Root Test Pages</h2>
+    <p>These pages primarily test standard Autofill scenarios within a single frame or with simple embedding.</p>
+    <ul>
+        <li>
+            <a href="address-forms.html">address-forms.html</a>
+            <span class="description"><strong>Partial Address Forms</strong>: Contains multiple independent
+                "micro-forms" (e.g., Name only, Address only, City only) to test how Autofill handles incomplete address
+                sections.</span>
+        </li>
+        <li>
+            <a href="address_form_with_defaultprevented.html">address_form_with_defaultprevented.html</a>
+            <span class="description"><strong>JS-Intercepted Submission</strong>: An address form where the
+                <code>submit</code> event is intercepted and <code>preventDefault()</code> is called, testing if
+                Autofill correctly detects submission when the browser's default behavior is blocked.</span>
+        </li>
+        <li>
+            <a href="big-address-form.html">big-address-form.html</a>
+            <span class="description"><strong>Comprehensive Address</strong>: A standard, large layout containing all
+                typical address fields (Name, Lines 1-3, City, State, Zip, Country) to verify full-profile
+                filling.</span>
+        </li>
+        <li>
+            <a href="email-login-form.html">email-login-form.html</a>
+            <span class="description"><strong>Standard Login</strong>: A basic email + password login form.</span>
+        </li>
+        <li>
+            <a href="full-address-form.html">full-address-form.html</a>
+            <span class="description"><strong>Configurable Submission</strong>: A versatile address form that uses URL
+                parameters (<code>preventDefault</code>, <code>redirectWhenDefaultPrevented</code>) to dynamically
+                toggle test behaviors for submission and redirection.</span>
+        </li>
+        <li>
+            <a href="password-eval-html-submission-effect.html">password-eval-html-submission-effect.html</a>
+            <span class="description"><strong>Dynamic Form Lifecycle</strong>: Creates a password form via JavaScript
+                and removes it immediately upon submission <code>preventDefault</code>. Tests if Autofill can capture
+                the "submission" signal even if the form is destroyed DOM-synchronously.</span>
+        </li>
+        <li>
+            <a href="password.html">password.html</a>
+            <span class="description"><strong>Submit by Deletion</strong>: A password form that includes a button to
+                trigger submission by removing the form element from the DOM (a pattern seen in some Single Page
+                Apps).</span>
+        </li>
+        <li>
+            <a href="post-message.html">post-message.html</a>
+            <span class="description"><strong>Msg Communication</strong>: A utility page that accepts and replies to
+                <code>postMessage</code> events. Useful for verifying cross-origin communication channels.</span>
+        </li>
+        <li>
+            <a href="signup-form.html">signup-form.html</a>
+            <span class="description"><strong>Registration</strong>: A signup flow with "Username", "New Password", and
+                "Confirm Password" fields.</span>
+        </li>
+        <li>
+            <a href="singe-cc-field-form.html">singe-cc-field-form.html</a>
+            <span class="description"><strong>Partial Credit Card</strong>: A form containing *only* a Credit Card
+                Number field, testing heuristics for single-field forms.</span>
+        </li>
+        <li>
+            <a href="single-email-field-login.html">single-email-field-login.html</a>
+            <span class="description"><strong>Step-based Login</strong>: A login flow with only an Email field (e.g.,
+                "Enter email first" flows).</span>
+        </li>
+        <li>
+            <a href="submit-only-form.html">submit-only-form.html</a>
+            <span class="description"><strong>Empty Form</strong>: A form with only a submit button, testing robust
+                handling of empty contexts.</span>
+        </li>
+        <li>
+            <a href="svg-anchor.html">svg-anchor.html</a>
+            <span class="description"><strong>Extraction Edge Case</strong>: Tests a specific bug where extraction
+                scripts might fail on SVG <code>&lt;a&gt;</code> tags because their <code>href</code> property is an
+                object (<code>SVGAnimatedString</code>), not a string.</span>
+        </li>
+        <li>
+            <a href="synthetic-form.html">synthetic-form.html</a>
+            <span class="description"><strong>Autocomplete Attributes</strong>: A simple form ensuring that fields are
+                identified correctly strictly via their <code>autocomplete</code> attributes.</span>
+        </li>
+    </ul>
+
+    <h2>XFrame Test Pages</h2>
+    <p>These pages are critical for testing <strong>Autofill Across Iframes</strong> (iOS feature), where a single logical
+        form is split across multiple documents (iframes).</p>
+    <ul>
+        <li>
+            <a href="xframe/address-and-cc.html">xframe/address-and-cc.html</a>
+            <span class="description"><strong>Hybrid Forms</strong>: Tests a page containing both an Address form and a Credit
+                Card form hosted in different iframes.</span>
+        </li>
+        <li>
+            <a href="xframe/address-form-xframe.html">xframe/address-form-xframe.html</a>
+            <span class="description"><strong>Distributed Address</strong>: An address form where individual fields (Name,
+                Address Line) reside in separate iframes.</span>
+        </li>
+        <li>
+            <a href="xframe/cc-form.html">xframe/cc-form.html</a>
+            <span class="description"><strong>Standalone / Child</strong>: A full credit card form. Often used as a child frame
+                source, but runnable independently.</span>
+        </li>
+        <li>
+            <a href="xframe/formless_index.html">xframe/formless_index.html</a>
+            <span class="description"><strong>Formless Aggregation</strong>: A set of iframes containing credit card fields
+                (Name, Number, Exp, CVC) *without* a wrapping <code>&lt;form&gt;</code> tag in the parent document. Tests
+                heuristic aggregation.</span>
+        </li>
+        <li>
+            <a href="xframe/formless_index2.html">xframe/formless_index2.html</a>
+            <span class="description"><strong>Formless Variation</strong>: Similar to the above, but testing a different
+                layout/grouping of the unowned fields.</span>
+        </li>
+        <li>
+            <a href="xframe/index-srcdoc.html">xframe/index-srcdoc.html</a>
+            <span class="description"><strong>Srcdoc Support</strong>: Tests cross-frame autofill when one of the child frames
+                is created via data in <code>srcdoc</code> (which has a unique origin handling).</span>
+        </li>
+        <li>
+            <a href="xframe/index.html">xframe/index.html</a>
+            <span class="description"><strong>Standard Split-Form</strong>: The primary test case. A parent form contains the
+                <code>Name</code> field, while logic requires bridging to child iframes for <code>Number</code>,
+                <code>Expiry</code>, and <code>CVC</code>.</span>
+        </li>
+        <li>
+            <a href="xframe/index2.html">xframe/index2.html</a>
+            <span class="description"><strong>Mixed Layout</strong>: A variation of the split-form where the <code>Name</code>
+                field is removed from the parent, leaving mostly iframe containers and a <code>&lt;select&gt;</code> for Expiry
+                in the parent.</span>
+        </li>
+        <li>
+            <a href="xframe/target-test.html">xframe/target-test.html</a>
+            <span class="description"><strong>Target Attribute</strong>: Tests a form submitted with
+                <code>target="target-frame"</code>, verifying that Autofill handles submission signals correctly when the
+                response is directed to a sibling iframe.</span>
+        </li>
+        <li>
+            <a href="xframe/xhr-problem-repro-multiframes.html">xframe/xhr-problem-repro-multiframes.html</a>
+            <span class="description"><strong>Multi-Frame XHR</strong>: Reproduces a specific bug where an AJAX submission
+                removes forms from multiple child iframes, testing if the "submission detected" signal survives the
+                destruction.</span>
+        </li>
+        <li>
+            <a href="xframe/xhr-problem-repro.html">xframe/xhr-problem-repro.html</a>
+            <span class="description"><strong>Single-Frame XHR</strong>: A simpler variant of the XHR destruction test case with
+                a single child iframe.</span>
+        </li>
+        </ul>
+</body>
+
+</html>

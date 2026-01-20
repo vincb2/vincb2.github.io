@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SVG Context Extraction Bug Test</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+        .test-box { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        #output { 
+            white-space: pre-wrap; 
+            background: #f4f4f4; 
+            padding: 15px; 
+            border: 1px solid #ddd; 
+            border-left: 5px solid #d9534f;
+            font-family: monospace;
+        }
+        button { 
+            padding: 10px 20px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            background: #0275d8; 
+            color: white; 
+            border: none; 
+            border-radius: 4px;
+        }
+        button:hover { background: #01549b; }
+        .success { color: green; font-weight: bold; }
+        .failure { color: #d9534f; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Extraction Test: HTML vs. SVG Anchors</h1>
+    <p>This page tests the extraction logic from <code>page_context_extractor.ts</code>.</p>
+
+    <div class="test-box">
+        <h3>1. Standard HTML Anchor</h3>
+        <a id="html-anchor" href="https://www.google.com">Google (HTML Link)</a>
+        <p><small>The <code>.href</code> property here is a simple <b>string</b>.</small></p>
+    </div>
+
+    <div class="test-box">
+        <h3>2. SVG Anchor</h3>
+        <!-- SVG anchors use the same <a> tag name but in the SVG namespace -->
+        <svg width="200" height="40" style="border: 1px dashed #aaa;">
+            <a id="svg-anchor" href="https://www.google.com">
+                <text x="10" y="25" fill="blue" text-decoration="underline">Google (SVG Link)</text>
+            </a>
+        </svg>
+        <p><small>The <code>.href</code> property here is an <b>SVGAnimatedString</b> object.</small></p>
+    </div>
+
+    <button onclick="runExtractionTest()">Run Extraction Logic Test</button>
+
+    <h3>Result Log:</h3>
+    <div id="output">Click the button to simulate the script logic...</div>
+
+    <script>
+        function runExtractionTest() {
+            const output = document.getElementById('output');
+            const htmlAnchor = document.getElementById('html-anchor');
+            const svgAnchor = document.getElementById('svg-anchor');
+
+            let log = "--- PROBING ELEMENT PROPERTIES ---\n";
+            log += `HTML Anchor .href type: ${typeof htmlAnchor.href} (${htmlAnchor.href})\n`;
+            log += `SVG Anchor .href type: ${typeof svgAnchor.href} (Object: ${svgAnchor.href})\n\n`;
+
+            // --- SIMULATING SCRIPT LOGIC ---
+            log += "--- SIMULATING page_context_extractor.ts LOGIC ---\n";
+            
+            // The script uses this exact selector:
+            // node.querySelectorAll('a[href]')
+            const linksArray = [];
+            const anchorElements = document.querySelectorAll('a[href]');
+            
+            log += `Found ${anchorElements.length} anchor elements matching 'a[href]'.\n\n`;
+
+            anchorElements.forEach((anchor, index) => {
+                // The script performs this push:
+                // linksArray.push({ href: anchor.href, linkText: anchor.textContent });
+                linksArray.push({
+                    href: anchor.href,
+                    linkText: anchor.textContent.trim(),
+                });
+                log += `Extracted Link [${index}]: ${anchor.tagName} (ID: ${anchor.id})\n`;
+            });
+
+            log += "\n--- WEB KERNEL SERIALIZATION TEST ---\n";
+            log += "Testing if the resulting object can be sent to Native (WebKit/PostMessage):\n";
+
+            try {
+                /**
+                 * structuredClone() is the web standard for the algorithm WebKit uses 
+                 * to pass objects between JavaScript and the Native app (Structured Clone Algorithm).
+                 */
+                const clonedData = structuredClone(linksArray);
+                log += "<span class='success'>[SUCCESS]</span> Object was successfully serialized.\n";
+                console.log("Serialized Data:", clonedData);
+            } catch (e) {
+                log += `<span class='failure'>[FAILED]</span> DataCloneError: ${e.message}\n`;
+                log += "\nCRITICAL ISSUE DETECTED:\n";
+                log += "The SVGAnimatedString (from the SVG anchor) is not serializable. \n";
+                log += "When this script runs in the Chromium/iOS environment, this error \n";
+                log += "causes the extraction response to fail or return an empty object to the browser.";
+            }
+
+            output.innerHTML = log;
+        }
+    </script>
+</body>
+</html>
