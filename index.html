@@ -53,7 +53,16 @@
 
     <h1>HELLO! would you like to test autofilling forms :)</h1>
 
-    <h2>Root Test Pages</h2>
+    <div style="background-color: #f9f9f9; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px;">
+        <h3 style="margin-top: 0;">Table of Contents</h3>
+        <ul>
+            <li><a href="#root-test-pages">Root Test Pages</a></li>
+            <li><a href="#autologin-test-pages">Autologin Test Pages</a></li>
+            <li><a href="#xframe-test-pages">XFrame Test Pages</a></li>
+        </ul>
+    </div>
+    
+    <h2 id="root-test-pages">Root Test Pages</h2>
     <p>These pages primarily test standard Autofill scenarios within a single frame or with simple embedding.</p>
     <ul>
         <li>
@@ -68,11 +77,7 @@
                 <code>submit</code> event is intercepted and <code>preventDefault()</code> is called, testing if
                 Autofill correctly detects submission when the browser's default behavior is blocked.</span>
         </li>
-        <li>
-            <a href="autologin-form.html">autologin-form.html</a>
-            <span class="description"><strong>Auto-Submission</strong>: A login form designed to satisfy Password Manager
-                auto-submission heuristics (username + password, ignoring intervening checkbox, no subsequent fields).</span>
-        </li>
+
         <li>
             <a href="big-address-form.html">big-address-form.html</a>
             <span class="description"><strong>Comprehensive Address</strong>: A standard, large layout containing all
@@ -139,29 +144,71 @@
         </li>
     </ul>
 
-    <h2>XFrame Test Pages</h2>
-    <p>These pages are critical for testing <strong>Autofill Across Iframes</strong> (iOS feature), where a single logical
+    <h2 id="autologin-test-pages">Autologin Test Pages</h2>
+    <p>Pages specifically designed to test Password Manager's auto-submission heuristics.</p>
+    <ul>
+        <li>
+            <a href="autologin/auto_submit_test.html">autologin/auto_submit_test.html</a>
+            <span class="description"><strong>Standard Auto-Submit</strong>: This form meets the criteria for Password
+                Manager auto-submission.</span>
+        </li>
+        <li>
+            <a href="autologin/autologin-form.html">autologin/autologin-form.html</a>
+            <span class="description"><strong>Legacy Auto-Submit</strong>: A login form designed to satisfy Password Manager
+                auto-submission heuristics.</span>
+        </li>
+        <li>
+            <a href="autologin/auto_submit_with_preceding_field.html">autologin/auto_submit_with_preceding_field.html</a>
+            <span class="description"><strong>Preceding Field</strong>: This form SHOULD auto-submit. The heuristic allows
+                focusable fields BEFORE the username.</span>
+        </li>
+        <li>
+            <a href="autologin/auto_submit_disabled_field_after.html">autologin/auto_submit_disabled_field_after.html</a>
+            <span class="description"><strong>Disabled - Field After</strong>: This form should NOT auto-submit because
+                there is a focusable text field AFTER the password.</span>
+        </li>
+        <li>
+            <a
+                href="autologin/auto_submit_disabled_field_between.html">autologin/auto_submit_disabled_field_between.html</a>
+            <span class="description"><strong>Disabled - Field Between</strong>: This form should NOT auto-submit because
+                there is a focusable text field between the username and password.</span>
+        </li>
+        <li>
+            <a href="autologin/auto_submit_disabled_radio_button.html">autologin/auto_submit_disabled_radio_button.html</a>
+            <span class="description"><strong>Disabled - Radio</strong>: This form should NOT auto-submit because Radio
+                Buttons are NOT ignored by the heuristic, unlike Checkboxes.</span>
+        </li>
+    </ul>
+    
+    <h2 id="xframe-test-pages">XFrame Test Pages</h2>
+    <p>These pages are critical for testing <strong>Autofill Across Iframes</strong> (iOS feature), where a single
+        logical
         form is split across multiple documents (iframes).</p>
     <ul>
         <li>
             <a href="xframe/address-and-cc.html">xframe/address-and-cc.html</a>
-            <span class="description"><strong>Hybrid Forms</strong>: Tests a page containing both an Address form and a Credit
+            <span class="description"><strong>Hybrid Forms</strong>: Tests a page containing both an Address form and a
+                Credit
                 Card form hosted in different iframes.</span>
         </li>
         <li>
             <a href="xframe/address-form-xframe.html">xframe/address-form-xframe.html</a>
-            <span class="description"><strong>Distributed Address</strong>: An address form where individual fields (Name,
+            <span class="description"><strong>Distributed Address</strong>: An address form where individual fields
+                (Name,
                 Address Line) reside in separate iframes.</span>
         </li>
         <li>
             <a href="xframe/cc-form.html">xframe/cc-form.html</a>
-            <span class="description"><strong>Standalone / Child</strong>: A full credit card form. Often used as a child frame
+            <span class="description"><strong>Standalone / Child</strong>: A full credit card form. Often used as a
+                child frame
                 source, but runnable independently.</span>
         </li>
         <li>
             <a href="xframe/formless_index.html">xframe/formless_index.html</a>
-            <span class="description"><strong>Formless Aggregation</strong>: A set of iframes containing credit card fields
-                (Name, Number, Exp, CVC) *without* a wrapping <code>&lt;form&gt;</code> tag in the parent document. Tests
+            <span class="description"><strong>Formless Aggregation</strong>: A set of iframes containing credit card
+                fields
+                (Name, Number, Exp, CVC) *without* a wrapping <code>&lt;form&gt;</code> tag in the parent document.
+                Tests
                 heuristic aggregation.</span>
         </li>
         <li>
@@ -171,39 +218,46 @@
         </li>
         <li>
             <a href="xframe/index-srcdoc.html">xframe/index-srcdoc.html</a>
-            <span class="description"><strong>Srcdoc Support</strong>: Tests cross-frame autofill when one of the child frames
+            <span class="description"><strong>Srcdoc Support</strong>: Tests cross-frame autofill when one of the child
+                frames
                 is created via data in <code>srcdoc</code> (which has a unique origin handling).</span>
         </li>
         <li>
             <a href="xframe/index.html">xframe/index.html</a>
-            <span class="description"><strong>Standard Split-Form</strong>: The primary test case. A parent form contains the
+            <span class="description"><strong>Standard Split-Form</strong>: The primary test case. A parent form
+                contains the
                 <code>Name</code> field, while logic requires bridging to child iframes for <code>Number</code>,
                 <code>Expiry</code>, and <code>CVC</code>.</span>
         </li>
         <li>
             <a href="xframe/index2.html">xframe/index2.html</a>
-            <span class="description"><strong>Mixed Layout</strong>: A variation of the split-form where the <code>Name</code>
-                field is removed from the parent, leaving mostly iframe containers and a <code>&lt;select&gt;</code> for Expiry
+            <span class="description"><strong>Mixed Layout</strong>: A variation of the split-form where the
+                <code>Name</code>
+                field is removed from the parent, leaving mostly iframe containers and a <code>&lt;select&gt;</code> for
+                Expiry
                 in the parent.</span>
         </li>
         <li>
             <a href="xframe/target-test.html">xframe/target-test.html</a>
             <span class="description"><strong>Target Attribute</strong>: Tests a form submitted with
-                <code>target="target-frame"</code>, verifying that Autofill handles submission signals correctly when the
+                <code>target="target-frame"</code>, verifying that Autofill handles submission signals correctly when
+                the
                 response is directed to a sibling iframe.</span>
         </li>
         <li>
             <a href="xframe/xhr-problem-repro-multiframes.html">xframe/xhr-problem-repro-multiframes.html</a>
-            <span class="description"><strong>Multi-Frame XHR</strong>: Reproduces a specific bug where an AJAX submission
+            <span class="description"><strong>Multi-Frame XHR</strong>: Reproduces a specific bug where an AJAX
+                submission
                 removes forms from multiple child iframes, testing if the "submission detected" signal survives the
                 destruction.</span>
         </li>
         <li>
             <a href="xframe/xhr-problem-repro.html">xframe/xhr-problem-repro.html</a>
-            <span class="description"><strong>Single-Frame XHR</strong>: A simpler variant of the XHR destruction test case with
+            <span class="description"><strong>Single-Frame XHR</strong>: A simpler variant of the XHR destruction test
+                case with
                 a single child iframe.</span>
         </li>
-        </ul>
+    </ul>
 </body>
 
 </html>
