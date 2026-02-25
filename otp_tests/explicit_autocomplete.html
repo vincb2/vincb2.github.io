@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explicit Autocomplete OTP Test</title>
+</head>
+
+<body>
+  <h1>Explicit Autocomplete OTP Test</h1>
+
+  <h2>1. Standard Input</h2>
+  <label for="otp-standard">Enter OTP:</label>
+  <input type="text" id="otp-standard" autocomplete="one-time-code">
+
+  <h2>2. Select Element (Edge Case)</h2>
+  <label for="otp-select">Select OTP (Should not happen but testing parser):</label>
+  <select id="otp-select" autocomplete="one-time-code">
+    <option value="">Select...</option>
+    <option value="123456">123456</option>
+  </select>
+</body>
+
+</html>
